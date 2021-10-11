@@ -28,8 +28,8 @@ jobs:
         run: |
           export CURRENT_BRANCH=${GITHUB_REF#refs/heads/}
           export TAG=$([[ $CURRENT_BRANCH == "main" ]] && echo "latest" || echo $CURRENT_BRANCH)
-          export GITHUB_REF_IMAGE=solaobajiuik/mudlet-docker-vnc:$GITHUB_SHA
-          export GITHUB_BRANCH_IMAGE=solaobajiuik/mudlet-docker-vnc:$TAG
-          docker build -t solaobajiuik/mudlet-docker-vnc -t $GITHUB_REF_IMAGE -t $GITHUB_BRANCH_IMAGE .
+          export GITHUB_REF_IMAGE=sstoves/mudlet-vnc:$GITHUB_SHA
+          export GITHUB_BRANCH_IMAGE=sstoves/mudlet-vnc:$TAG
+          docker build -t sstoves/mudlet-vnc -t $GITHUB_REF_IMAGE -t $GITHUB_BRANCH_IMAGE .
           echo "Pushing Image to DockerHub"
           docker push $GITHUB_BRANCH_IMAGE
