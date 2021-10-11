@@ -10,10 +10,11 @@ RUN set -ex; \
       x11vnc \
       xvfb \ 
       lua5.1 \
-      mudlet \
-      luarocks; \
-    luarocks --tree /usr/local/ --lua-version 5.1 install luautf8; \
-    luarocks --lua-version 5.1 install lcf;
+      wget; \
+    wget https://www.mudlet.org/download/Mudlet-4.13.1-linux-x64.AppImage.tar; \
+    tar -vxf Mudlet-4.13.1-linux-x64.AppImage.tar; \
+    mv Mudlet.AppImage /usr/games/mudlet; \
+    chown +x /usr/games/mudlet;
 
 ENV HOME=/root \
     DEBIAN_FRONTEND=noninteractive \
