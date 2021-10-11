@@ -10,7 +10,8 @@ RUN set -ex; \
       x11vnc \
       xvfb \ 
       lua5.1 \
-      wget; \
+      wget \
+      libglib2.0-dev; \
     wget https://www.mudlet.org/download/Mudlet-4.13.1-linux-x64.AppImage.tar; \
     tar -vxf Mudlet-4.13.1-linux-x64.AppImage.tar; \
     mv Mudlet.AppImage /usr/games/mudlet; \
