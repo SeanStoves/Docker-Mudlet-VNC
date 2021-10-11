@@ -1,0 +1,35 @@
+name: Build and Deploy to Docker Hub
+
+on:
+  push:
+    branches:
+      - "main"
+    paths-ignore:
+      - '.github/**'
+
+jobs:
+  #######
+  #   Publish to Private Docker Registry
+  #######
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.REGISTRY_USER }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+      - name: Build and Push Docker Images
+        run: |
+          export CURRENT_BRANCH=${GITHUB_REF#refs/heads/}
+          export TAG=$([[ $CURRENT_BRANCH == "main" ]] && echo "latest" || echo $CURRENT_BRANCH)
+          export GITHUB_REF_IMAGE=solaobajiuik/mudlet-docker-vnc:$GITHUB_SHA
+          export GITHUB_BRANCH_IMAGE=solaobajiuik/mudlet-docker-vnc:$TAG
+          docker build -t solaobajiuik/mudlet-docker-vnc -t $GITHUB_REF_IMAGE -t $GITHUB_BRANCH_IMAGE .
+          echo "Pushing Image to DockerHub"
+          docker push $GITHUB_BRANCH_IMAGE
