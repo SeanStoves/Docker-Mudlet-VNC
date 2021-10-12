@@ -1,5 +1,6 @@
 # Docker VNC Mudlet Container
-
+[![Build and Deploy to Docker Hub](https://github.com/SeanStoves/Docker-Mudlet-VNC/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/SeanStoves/Docker-Mudlet-VNC/actions/workflows/docker-publish.yml)
+![Docker Pulls](https://img.shields.io/docker/pulls/sstoves/mudlet-vnc)
 
 ### Environment Variables with their defaults:
 
