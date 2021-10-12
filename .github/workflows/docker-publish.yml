@@ -33,3 +33,4 @@ jobs:
           docker build -t sstoves/mudlet-vnc -t $GITHUB_REF_IMAGE -t $GITHUB_BRANCH_IMAGE .
           echo "Pushing Image to DockerHub"
           docker push $GITHUB_BRANCH_IMAGE
+          docker push $GITHUB_REF_IMAGE
