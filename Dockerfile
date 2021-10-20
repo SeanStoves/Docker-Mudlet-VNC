@@ -11,13 +11,17 @@ RUN set -ex; \
       xvfb \ 
       lua5.1 \
       wget \
-      libglib2.0-dev; \
+      libglib2.0-dev \
+      novnc; \
     wget https://www.mudlet.org/download/Mudlet-4.13.1-linux-x64.AppImage.tar; \
     tar -vxf Mudlet-4.13.1-linux-x64.AppImage.tar; \
     mv Mudlet.AppImage /usr/games/mudlet; \
     chmod +x /usr/games/mudlet;
 
-ENV HOME=/root \
+RUN groupadd -r mudlet -g 1000 && useradd -u 1000 -r -g mudlet -m -d /mudlet -s /sbin/nologin -c "Mudlet user" mudlet && \
+    chmod 755 /mudlet
+
+ENV HOME=/mudlet \
     DEBIAN_FRONTEND=noninteractive \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8 \
@@ -27,7 +31,11 @@ ENV HOME=/root \
     DISPLAY_HEIGHT=768 \
     RUN_MUDLET=yes \
     RUN_FLUXBOX=yes \
+    RUN_NOVNC=yes \
     VNC_PASSWORD=password
 COPY . /app
+
+USER mudlet
 CMD ["/app/entrypoint.sh"]
 EXPOSE 5900
+EXPOSE 8080
