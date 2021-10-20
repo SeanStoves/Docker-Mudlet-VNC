@@ -34,6 +34,9 @@ ENV HOME=/mudlet \
     RUN_NOVNC=yes \
     VNC_PASSWORD=password
 COPY . /app
+COPY ./fluxbox/ /mudlet/.fluxbox/
+
+RUN chown 1000:1000 /mudlet/.fluxbox
 
 USER mudlet
 CMD ["/app/entrypoint.sh"]
