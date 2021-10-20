@@ -23,4 +23,5 @@
    <tr><td><b>Tag</b></td><td>description</td></tr>
    <tr><td>sstoves/mudlet-vnc:latest</td><td>This is the latest/greatest version of Mudlet</td></tr>
    <tr><td>sstoves/mudlet-vnc:4.13.1</td><td>This is the 4.13.1 version of Mudlet</td></tr>
+   <tr><td>sstoves/mudlet-vnc:3.22.1</td><td>This is the 3.22.1 version of Mudlet</td></tr>
 </table>
