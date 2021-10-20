@@ -1,0 +1,3 @@
+[begin] (Click Below)
+[exec] (Launch Mudlet) {/usr/games/mudlet --appimage-extract-and-run}
+[end]
