@@ -1,0 +1,3 @@
+OnDesktop Mouse1 :RootMenu
+OnDesktop Mouse2 :WorkspaceMenu
+OnDesktop Mouse3 :HideMenus
