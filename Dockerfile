@@ -24,6 +24,10 @@ RUN apt-get update && \
       tigervnc-standalone-server \
       tigervnc-tools \
       libglib2.0-0 \
+      libopengl0 \
+      libegl1 \
+      libxcb-cursor0 \
+      libcurl4 \
       python3 \
       python3-pip && \
     pip3 install --no-cache-dir --break-system-packages --no-deps websockify && \
