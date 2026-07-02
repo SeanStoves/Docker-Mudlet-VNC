@@ -22,6 +22,7 @@ RUN apt-get update && \
       fluxbox \
       supervisor \
       tigervnc-standalone-server \
+      tigervnc-tools \
       libglib2.0-0 \
       python3 \
       python3-pip && \
@@ -33,8 +34,7 @@ RUN apt-get update && \
 
 RUN groupadd -r mudlet -g 1000 && \
     useradd -u 1000 -r -g mudlet -m -d /mudlet -s /sbin/nologin -c "Mudlet user" mudlet && \
-    chmod 755 /mudlet && \
-    mkdir -p /mudlet/.vnc
+    chmod 755 /mudlet
 
 COPY --from=downloader /Mudlet.AppImage /usr/games/mudlet
 RUN chmod +x /usr/games/mudlet
