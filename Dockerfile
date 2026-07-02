@@ -19,13 +19,17 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-      bash \
       fluxbox \
       supervisor \
       tigervnc-standalone-server \
       libglib2.0-0 \
-      python3-websockify && \
-    rm -rf /var/lib/apt/lists/*
+      python3 \
+      python3-pip && \
+    pip3 install --no-cache-dir --break-system-packages --no-deps websockify && \
+    apt-get remove --purge -y python3-pip && \
+    apt-get autoremove --purge -y && \
+    dpkg --force-depends -r fonts-urw-base35 poppler-data && \
+    rm -rf /var/lib/apt/lists/* /root/.cache
 
 RUN groupadd -r mudlet -g 1000 && \
     useradd -u 1000 -r -g mudlet -m -d /mudlet -s /sbin/nologin -c "Mudlet user" mudlet && \

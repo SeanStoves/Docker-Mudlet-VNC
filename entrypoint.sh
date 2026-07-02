@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 set -ex
 
 RUN_FLUXBOX=${RUN_FLUXBOX:-yes}
