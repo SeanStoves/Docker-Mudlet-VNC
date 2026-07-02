@@ -8,29 +8,31 @@ on:
       - '.github/**'
 
 jobs:
-  #######
-  #   Publish to Private Docker Registry
-  #######
   publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Get current date
-        id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
       - name: Checkout
-        uses: actions/checkout@v2
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v1
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.REGISTRY_USER }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
+
       - name: Build and Push Docker Images
         run: |
-          export CURRENT_BRANCH=${GITHUB_REF#refs/heads/}
-          export TAG=$([[ $CURRENT_BRANCH == "main" ]] && echo "latest" || echo $CURRENT_BRANCH)
-          export GITHUB_REF_IMAGE=sstoves/mudlet-vnc:4.13.1
-          export GITHUB_BRANCH_IMAGE=sstoves/mudlet-vnc:$TAG
-          docker build -t sstoves/mudlet-vnc -t $GITHUB_REF_IMAGE -t $GITHUB_BRANCH_IMAGE .
-          echo "Pushing Image to DockerHub"
-          docker push $GITHUB_BRANCH_IMAGE
-          docker push $GITHUB_REF_IMAGE
+          docker build \
+            -t sstoves/mudlet-vnc:latest \
+            -t sstoves/mudlet-vnc:4.21.1 \
+            .
+          docker push sstoves/mudlet-vnc:4.21.1
+          docker push sstoves/mudlet-vnc:latest
+
+      - name: Update Docker Hub description
+        uses: peter-evans/dockerhub-description@v4
+        with:
+          username: ${{ secrets.REGISTRY_USER }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+          repository: sstoves/mudlet-vnc
+          readme-filepath: ./README.md
