@@ -5,6 +5,7 @@ RUN_FLUXBOX=${RUN_FLUXBOX:-yes}
 RUN_MUDLET=${RUN_MUDLET:-yes}
 RUN_NOVNC=${RUN_NOVNC:-yes}
 
+mkdir -p /mudlet/.vnc
 # Write VNC password file — keeps password out of process list
 printf '%s\n' "${VNC_PASSWORD}" | vncpasswd -f > /mudlet/.vnc/passwd
 chmod 600 /mudlet/.vnc/passwd
