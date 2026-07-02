@@ -1,28 +1,32 @@
-FROM debian:buster
+FROM debian:bookworm-slim
+
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN set -ex; \
     apt-get update; \
-    apt-get install -y \
+    apt-get install -y --no-install-recommends \
       bash \
       fluxbox \
       net-tools \
       supervisor \
       x11vnc \
-      xvfb \ 
-      lua5.1 \
+      xvfb \
       wget \
-      libglib2.0-dev \
-      novnc; \
-    wget https://www.mudlet.org/download/Mudlet-4.13.1-linux-x64.AppImage.tar; \
-    tar -vxf Mudlet-4.13.1-linux-x64.AppImage.tar; \
+      libglib2.0-0 \
+      novnc \
+      python3-websockify; \
+    wget -q https://github.com/Mudlet/Mudlet/releases/download/Mudlet-4.21.1/Mudlet-4.21.1-linux-x64.AppImage.tar; \
+    tar -xf Mudlet-4.21.1-linux-x64.AppImage.tar; \
     mv Mudlet.AppImage /usr/games/mudlet; \
-    chmod +x /usr/games/mudlet;
+    chmod +x /usr/games/mudlet; \
+    rm -f Mudlet-4.21.1-linux-x64.AppImage.tar; \
+    rm -rf /var/lib/apt/lists/*
 
-RUN groupadd -r mudlet -g 1000 && useradd -u 1000 -r -g mudlet -m -d /mudlet -s /sbin/nologin -c "Mudlet user" mudlet && \
+RUN groupadd -r mudlet -g 1000 && \
+    useradd -u 1000 -r -g mudlet -m -d /mudlet -s /sbin/nologin -c "Mudlet user" mudlet && \
     chmod 755 /mudlet
 
 ENV HOME=/mudlet \
-    DEBIAN_FRONTEND=noninteractive \
     LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8 \
     LC_ALL=C.UTF-8 \
@@ -33,6 +37,7 @@ ENV HOME=/mudlet \
     RUN_FLUXBOX=yes \
     RUN_NOVNC=yes \
     VNC_PASSWORD=password
+
 COPY . /app
 COPY ./fluxbox/ /mudlet/.fluxbox/
 
